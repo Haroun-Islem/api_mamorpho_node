@@ -6,6 +6,8 @@ const app = express();
 
 app.use(express.json());
 app.use("/api/users", require("./routes/userRoutes"));
+app.use("/api/auth", require("./routes/loginRoutes"));
+
 
 app.use((req, res, next) => {
   res.status(404).json({ message: "Route introuvable" });

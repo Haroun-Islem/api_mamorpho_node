@@ -14,14 +14,15 @@ User.create = (user, result) => {
           "Erreur lors de la recherche de l'utilisateur existant :",
           err
         );
-        result(err, null);
-        return;
+        return result(
+          { message: "Erreur lors de la recherche de l'utilisateur existant" },
+          null
+        );
       }
 
       if (res.length > 0) {
         // L'email existe déjà, renvoyer une erreur ou un message indiquant que l'utilisateur existe déjà
-        result("L'utilisateur existe déjà", null);
-        return;
+        return result({ message: "L'utilisateur existe déjà" }, null);
       }
 
       // L'email n'existe pas, procéder à l'insertion de l'utilisateur
@@ -35,8 +36,10 @@ User.create = (user, result) => {
         (err, res) => {
           if (err) {
             console.error("Erreur lors de la création de l'utilisateur :", err);
-            result(err, null);
-            return;
+            return result(
+              { message: "Erreur lors de la création de l'utilisateur" },
+              null
+            );
           }
           console.log("Utilisateur créé avec succès");
           result(null, { id: res.insertId, ...user });
